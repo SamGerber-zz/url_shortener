@@ -52,8 +52,7 @@ class ShortenedUrl < ActiveRecord::Base
   end
 
   def num_recent_uniques
-    recent_visits = visits.select{|visit| visit.updated_at > 10.minutes.ago }
-    recent_visits.select(:user_id).distinct.count
+    visits.select(:user_id, :updated_at).distinct.count{|visit| visit.updated_at > 10.minutes.ago }
   end
 
 end
